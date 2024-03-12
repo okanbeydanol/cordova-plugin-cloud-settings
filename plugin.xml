@@ -32,6 +32,15 @@
             <clobbers target="cordova.plugin.cloudsettings" />
         </js-module>
 
+       <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
+            <application
+                    android:backupAgent="cordova.plugin.cloudsettings.BackupAgentHelper"
+                    android:fullBackupContent="@xml/backup_rules_lte_api_30"
+        			android:dataExtractionRules="@xml/backup_rules_gte_api_31"
+            />
+        </edit-config>
+
+
         <resource-file src="src/android/backup_rules_lte_api_30.xml" target="res/xml/backup_rules_lte_api_30.xml" />
         <resource-file src="src/android/backup_rules_gte_api_31.xml" target="res/xml/backup_rules_gte_api_31.xml" />
         <source-file src="src/android/CloudSettingsPlugin.java" target-dir="src/cordova/plugin/cloudsettings" />
