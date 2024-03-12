@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-cloud-settings"
+        version="2.0.1">
+
+    <name>cordova-plugin-cloud-settings</name>
+    <description>A Cordova plugin for Android &amp; iOS to persist user settings in cloud storage across devices and installs.</description>
+    <license>MIT</license>
+    <keywords>cordova,android,ios,backup,cloud,settings,icloud</keywords>
+
+    <author>Dave Alden</author>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <repo>https://github.com/dpa99c/cordova-plugin-cloud-settings.git</repo>
+    <issue>https://github.com/dpa99c/cordova-plugin-cloud-settings/issues</issue>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="CloudSettingsPlugin" >
+                <param name="android-package" value="cordova.plugin.cloudsettings.CloudSettingsPlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <dependency id="cordova-plugin-file" version="*" />
+
+        <js-module src="www/android/cloudsettings.js" name="CloudSettingsPlugin">
+            <clobbers target="cordova.plugin.cloudsettings" />
+        </js-module>
+
+        <resource-file src="src/android/backup_rules_lte_api_30.xml" target="res/xml/backup_rules_lte_api_30.xml" />
+        <resource-file src="src/android/backup_rules_gte_api_31.xml" target="res/xml/backup_rules_gte_api_31.xml" />
+        <source-file src="src/android/CloudSettingsPlugin.java" target-dir="src/cordova/plugin/cloudsettings" />
+        <source-file src="src/android/BackupAgentHelper.java" target-dir="src/cordova/plugin/cloudsettings" />
+    </platform>
+
+    <platform name="ios">
+
+         <config-file target="*-Release.plist" parent="com.apple.developer.ubiquity-kvstore-identifier">
+            <string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+        </config-file>
+
+        <config-file target="*-Debug.plist" parent="com.apple.developer.ubiquity-kvstore-identifier">
+            <string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+        </config-file>
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="CloudSettingsPlugin">
+                <param name="ios-package" value="CloudSettingsPlugin"/>
+            </feature>
+        </config-file>
+
+        <js-module src="www/ios/cloudsettings.js" name="CloudSettingsPlugin">
+            <clobbers target="cordova.plugin.cloudsettings" />
+        </js-module>
+
+        <header-file src="src/ios/CloudSettingsPlugin.h"/>
+        <source-file src="src/ios/CloudSettingsPlugin.m"/>
+
+        
+    </platform>
+</plugin>
